@@ -11,15 +11,15 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
 let topMovies = [
   {
     title: 'Saving Private Ryan',
-    Director: 'Steven Spielberg'
+    director: 'Steven Spielberg'
   },
   {
     title: 'Good Will Hunting',
-    Director: 'Gus Van Sant'
+    director: 'Gus Van Sant'
   },
   {
     title: 'The Departed',
-    Director: 'Martin Scorsese'
+    director: 'Martin Scorsese'
   },
 
 ]
