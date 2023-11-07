@@ -24,9 +24,7 @@ let topMovies = [
 
 ]
 
-app.use(morgan('combined', {
-  stream: accessLogStream
-}));
+app.use(morgan('common'));
 
 app.use(express.static('public'));
 
