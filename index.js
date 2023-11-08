@@ -8,8 +8,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
   flags: 'a'
 })
 
-let topMovies = [
-  {
+let topMovies = [{
     title: 'Saving Private Ryan',
     director: 'Steven Spielberg'
   },
@@ -28,12 +27,12 @@ app.use(morgan('common'));
 
 app.use(express.static('public'));
 
-app.get('/movies', (req, res) => {
-  res.json(topMovies);
-});
-
 app.get('/', (req, res) => {
   res.send('Welcome to myFlix!')
+});
+
+app.get('/movies', (req, res) => {
+  res.json(topMovies);
 });
 
 app.use((err, req, res, next) => {
