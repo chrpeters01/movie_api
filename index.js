@@ -1,7 +1,5 @@
 const express = require('express');
-morgan = require('morgan');
-fs = require('fs');
-path = require('path');
+const morgan = require('morgan');
 const app = express();
 
 let topMovies = [{
@@ -19,9 +17,7 @@ let topMovies = [{
 
 ]
 
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {
-  flags: 'a'
-})
+
 app.use(morgan('common'));
 
 app.use(express.static('public'));
