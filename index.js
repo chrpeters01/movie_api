@@ -40,7 +40,7 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // 3. 
-app.get('/genre/:name', (req, res) => {
+app.get('/genres/:name', (req, res) => {
   res.send('Successful GET request returns data about a genre (description by name/title');
 });
 
