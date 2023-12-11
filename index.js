@@ -43,27 +43,61 @@ app.get('/directors/:name', (req, res) => {
   res.send('Successful GET request returns data about a director (bio, birth year, death year) by name');
 });
 
-// 5. 
-app.post('/users', (req, res) => {
-  res.send('Allow new users to register');
+// 5. Get All Users
+app.get('/users', async (req, res) => {
+  await Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
 
-// 6.
+// 6. Add New User
+app.post('/users', async (req, res) => {
+  await Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists');
+      } else {
+        Users
+          .create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) =>{res.status(201).json(user) })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
+});
+
+// 7.
 app.put('/users/:userId', (req, res) => {
   res.send('Allow users to update their user info (username, password, email, date of birth)');
 });
 
-// 7. 
+// 8. 
 app.post('/users/:userId/favorites', (req, res) => {
   res.send('Allow users to add a movie to their list of favorites');
 });
 
-// 8. 
+// 9. 
 app.delete('/users/:userId/favorites/:movieId', (req, res) => {
   res.send('Allow users to remove a movie from their list of favorites');
 });
 
-// 9. 
+// 10. 
 app.delete('/users/:userId', (req, res) => {
   res.send('Allow existing users to deregister')
 });
