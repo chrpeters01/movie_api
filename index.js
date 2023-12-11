@@ -2,21 +2,15 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
+const mongoose = require('mongoose');
+const Models = require('./models.js');
+const Movies = Models.Movie;
+const Users = Models.User;
 
-let topMovies = [{
-    title: 'Saving Private Ryan',
-    director: 'Steven Spielberg'
-  },
-  {
-    title: 'Good Will Hunting',
-    director: 'Gus Van Sant'
-  },
-  {
-    title: 'The Departed',
-    director: 'Martin Scorsese'
-  },
-
-]
+mongoose.connect('mongodb://localhost:27017/movieDB', {
+useNewUrlParser: true, 
+useUnifiedTopology: true 
+});
 
 app.use(morgan('common'));
 
