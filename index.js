@@ -116,13 +116,15 @@ app.put('/users/:userId', async (req, res) => {
 });
 
 
-
-
-
 // 9. 
 app.post('/users/:userId/favorites', (req, res) => {
   res.send('Allow users to add a movie to their list of favorites');
 });
+
+
+
+
+
 
 // 10. 
 app.delete('/users/:userId/favorites/:movieId', (req, res) => {
