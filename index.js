@@ -94,10 +94,30 @@ app.get('/users/:userId', async (req, res) => {
     });
 });
 
-// 8.
-app.put('/users/:userId', (req, res) => {
-  res.send('Allow users to update their user info (username, password, email, date of birth)');
+// 8. Update User's Info
+app.put('/users/:userId', async (req, res) => {
+  await Users.findOneAndUpdate({ Username: req.params.Username }, { $set:
+    {
+      Username: req.body.Username,
+      Password: req.body.Password,
+      Email: req.body.Email,
+      Birthdate: req.body.Birthdate
+    }
+  },
+  { new: true }) // This line makes sure that the updated document is returned
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  })
+
 });
+
+
+
+
 
 // 9. 
 app.post('/users/:userId/favorites', (req, res) => {
