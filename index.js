@@ -65,7 +65,7 @@ app.post('/users/:userId/favorites', (req, res) => {
 });
 
 // 8. 
-app.delete('/users/:userId/favorites/:movieId<', (req, res) => {
+app.delete('/users/:userId/favorites/:movieId', (req, res) => {
   res.send('Allow users to remove a movie from their list of favorites');
 });
 
