@@ -82,22 +82,34 @@ app.post('/users', async (req, res) => {
     });
 });
 
-// 7.
+// 7. Return Specific User by Username
+app.get('/users/:userId', async (req, res) => {
+  await Users.findOne({ Username: req.params.Username })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
+
+// 8.
 app.put('/users/:userId', (req, res) => {
   res.send('Allow users to update their user info (username, password, email, date of birth)');
 });
 
-// 8. 
+// 9. 
 app.post('/users/:userId/favorites', (req, res) => {
   res.send('Allow users to add a movie to their list of favorites');
 });
 
-// 9. 
+// 10. 
 app.delete('/users/:userId/favorites/:movieId', (req, res) => {
   res.send('Allow users to remove a movie from their list of favorites');
 });
 
-// 10. 
+// 11. 
 app.delete('/users/:userId', (req, res) => {
   res.send('Allow existing users to deregister')
 });
