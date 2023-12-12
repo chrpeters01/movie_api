@@ -34,49 +34,159 @@
                <td>/movies/:title</td>
                <td>GET</td>
                <td>None</td>
-               <td>A JSON object holding data about a single movie</td>
+               <td>A JSON object holding data about a single movie title, including Genre/Director details.
+                  Example:
+                  <code>
+                  { 
+                  "Genre": {
+                  "Name": "Comedy",
+                  "Description": "Comedy is a film genre that..."
+                  },
+                  "Director": {
+                  "Name": "Adam McKay",
+                  "Bio": "Adam McKay is...",
+                  "Birth": "1968",
+                  "Death": ""
+                  }
+                  }
+                  </code>
+               </td>
             </tr>
             <tr>
                <td> Return data about a genre (description) by name/title:</td>
                <td>/genres/:name</td>
                <td>GET</td>
                <td>None</td>
-               <td>A JSON object holding data about the genre</td>
+               <td>A JSON object holding data about the genre.
+                  Example:
+                  <code>
+                  "Genre":  {  
+                  "Name": "Action",
+                  "Description": "Genre is..."
+                  }
+                  </code>
+               </td>
             </tr>
             <tr>
                <td>Return data about a director (bio, birth year, death year) by name:</td>
                <td>/directors/:name</td>
                <td>GET</td>
                <td>None</td>
-               <td>A JSON object holding data containg the director's biography, birth year, and death year (if applicable)</td>
+               <td>A JSON object holding data containg the director's biography, birth year, and death year (if applicable)
+                  Example:
+                  <code>
+                  {
+                  "Name": "J.J. Abrams",
+                  "Bio": "J.J. Abrams is ...",
+                  "Birth": "1965",
+                  "Death": "1966"
+                  }
+                  </code>
+               </td>
             </tr>
-           <tr>
+            <tr>
                <td>Allow new users to register</td>
                <td>/users</td>
                <td>POST</td>
                <td>None</td>
-               <td>A JSON object holding new user data</td>
+               <td>A JSON object holding new user to add.
+                  Structure:
+                  <code>
+                  {
+                  "Name": "Katie",
+                  "Password": "Password1",
+                  "Email": "Katie07@gmail.com",
+                  "Birthdate": "05/02/1980"
+                  }
+                  </code>
+               </td>
+               <td>A JSON object holding data about a user that was added, inluding an ID:
+                  <code>
+                  {
+                  "Name": "Katie",
+                  "Password": "Password1",
+                  "Email": "Katie07@gmail.com",
+                  "Birthdate": "1980-05-02T00:00:00Z",
+                  "FavoriteMovies": [],
+                  "_id": "656f7748f1edb95eb42dfd00",
+                  "__v": 0
+                  }
+                  </code>
+               </td>
             </tr>
             <tr>
-               <td>Allow users to update their user info (username):</td>
+               <td>Allow users to update their user info (username, password, email, date of birth)</td>
                <td>/users/:userId</td>
                <td>PUT</td>
                <td>None</td>
-               <td>A JSON object holding user info that should be changed</td>
+               <td>A JSON object holding user info that should be changed.
+                  Structure:
+                  <code>
+                  {
+                  "Password": "Password2",
+                  "Email": "Thomas23@gmail.com"
+                  }
+                  </code>
+               </td>
+               <td>A JSON object holding data about a user that was updated:
+                  <code>
+                  {
+                  "_id": "656f6b24f1edb95eb42dfcfd",
+                  "Username": "Tom ",
+                  "Password": "Password2",
+                  "Email": "Thomas23@gmail.com",
+                  "Birthdate": "1975-04-25T00:00:00Z",
+                  "favorite_movies": [
+                  "656f6b24f1edb95eb42dfcfd",
+                  "656f5482f1edb95eb42dfcf8"
+                  ],
+                  "__v": 0
+                  }
+                  </code>
+               </td>
             </tr>
             <tr>
                <td>Allow users to add a movie to their list of favorites</td>
                <td>/users/:userId/favorites</td>
                <td>POST</td>
                <td>None</td>
-               <td>A JSON object holding updated user info</td>
+               <td>A JSON object holding data about user's favorite list.
+                  Structure:
+                  <code>
+                  {
+                  "_id": "656f6b24f1edb95eb42dfcfd",
+                  "Username": "Tom ",
+                  "Password": "Password2",
+                  "Email": "Thomas23@gmail.com",
+                  "Birthdate": "1975-04-25T00:00:00Z",
+                  "favorite_movies": [
+                  "656f6b24f1edb95eb42dfcfd",
+                  "656f5482f1edb95eb42dfcf8"
+                  ],
+                  "__v": 0
+                  }
+                  </code>
+               </td>
             </tr>
             <tr>
                <td>Allow users to remove a movie from their list of favorites:</td>
                <td>/users/:userId/favorites/:movieId</td>
                <td>DELETE</td>
                <td>None</td>
-               <td>A JSON object holding updated user info</td>
+               <td>A JSON object holding data about user's favorite list.
+                  Structure:
+                  <code>
+                  {
+                  "_id": "656f6b24f1edb95eb42dfcfd",
+                  "Username": "Tom ",
+                  "Password": "Password2",
+                  "Email": "Thomas23@gmail.com",
+                  "Birthdate": "1975-04-25T00:00:00Z",
+                  "favorite_movies": [],
+                  "__v": 0
+                  }
+                  </code>
+               </td>
             </tr>
             <tr>
                <td>Allow existing users to deregister:</td>
