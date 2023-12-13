@@ -161,9 +161,6 @@ app.delete('/users/:userId/favorites/:movieId', (req, res) => {
 });
 
 
-
-
-
 // 10. Allow user to deregister
 app.delete('/users/:userId', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
