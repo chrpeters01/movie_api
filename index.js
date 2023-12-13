@@ -23,59 +23,163 @@ app.get('/', (req, res) => {
 });
 
 
-// 1. 
+// 1. Returns list of ALL movies
 app.get('/movies', (req, res) => {
-  res.send('Successful GET request returns list of ALL movies to the user');
-});
+  Movies.find()
+  .then((movies) => {
+    res.status(201).json(movies);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " + err);
+  });
+  });
 
-// 2. 
+  // 2. Returns list of ALL users
+  app.get('/users', function (req, res) {
+    Users.find()
+    .then(function (users) {
+      res.status(201).json(users);
+    })
+    .catch(function (err) {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+    });
+  
+  
+// 3. Returns data about single movie by title
 app.get('/movies/:title', (req, res) => {
-  res.send('Successful GET request returns data about a single movie by title to the user');
-});
-
-// 3. 
+  Movies.findOne({Title: req.params.Title})
+    .then((movie) => {
+      res.json(movie);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+  });
+  
+  // 4. Returns data about a genre (description by name/title)
 app.get('/genres/:name', (req, res) => {
-  res.send('Successful GET request returns data about a genre (description by name/title');
-});
+  Genres.findOne({Name: req.params.Name})
+   .then((genre) => {
+    res.json(genre.Description);
+   })
+   .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error: " = err);
+   });
+  });
+ 
 
-// 4. 
+// 5. Returns data about a director (bio, birth year, death year)
 app.get('/directors/:name', (req, res) => {
-  res.send('Successful GET request returns data about a director (bio, birth year, death year) by name');
+  Directors.findOne({Name: req.params.Name})
+  .then((director) => {
+    res.json(director);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error " + err);
+  });
 });
+ 
 
-// 5. 
+// 6. Register new user
 app.post('/users', (req, res) => {
-  res.send('Allow new users to register');
+  Users.findOne({ Username: req.body.Username })
+    .then((user) => {
+      if (user) {
+        return res.status(400).send(req.body.Username + 'already exists')
+      } else {
+        Users.create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+          .then((user) =>
+          {res.status(201).json(user);
+          })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send('Error: ' + error);
+    });
 });
 
-// 6.
+// 7. Update user info
 app.put('/users/:userId', (req, res) => {
-  res.send('Allow users to update their user info (username, password, email, date of birth)');
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    {
+      $set: {
+        Username: req.body.Username,
+        Password: req.body.Password,
+        Email: req.body.Email,
+        Birth: req.body.Birth,
+      },
+    },
+    { new: true }, 
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error " + err);
+      } else {
+        res.json(UpdatedUser);
+    }
+    }
+  );
 });
 
-// 7. 
+// 8. Add a movie to a user's list of favorites
 app.post('/users/:userId/favorites', (req, res) => {
-  res.send('Allow users to add a movie to their list of favorites');
+  Users.findOneAndUpdate(
+    { Username: req.params.Username }, 
+    {
+     $push: { FavoriteMovies: req.params.MovieID }
+   },
+   { new: true }) 
+  .then((updatedUser) => {
+    res.json(updatedUser);
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send('Error: ' + err);
+  });
 });
 
-// 8. 
+// 9. 
 app.delete('/users/:userId/favorites/:movieId', (req, res) => {
   res.send('Allow users to remove a movie from their list of favorites');
 });
 
-// 9. 
+
+
+
+
+// 10. Allow user to deregister
 app.delete('/users/:userId', (req, res) => {
-  res.send('Allow existing users to deregister')
+  Users.findOneAndRemove({ Username: req.params.Username })
+  .then((user) => {
+    if (!user) {
+      res.status(400).send(req.params.Username + "was not found");
+    } else {
+      res.status(200).send(req.params.Username + " was deleted");
+    }
+  })
+  .catch((err) => {
+    console.error(err);
+    res.status(500).send("Error " + err);
 });
-
-
-
-
-
-
-
-
-
+});
+ 
 
 
 app.use((err, req, res, next) => {
