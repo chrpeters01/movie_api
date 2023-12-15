@@ -112,36 +112,31 @@ app.post('/users', (req, res) => {
 });
 
 
-
-
-
 // 7. Update user info
-app.put('/users/:userId', (req, res) => {
-  Users.findOneAndUpdate({
-      Username: req.params.Username
-    }, {
+app.put('/users/:Username', (req, res) => {
+  Users.findOneAndUpdate(
+    {Username: req.params.Username}, 
+    {
       $set: {
         Username: req.body.Username,
         Password: req.body.Password,
         Email: req.body.Email,
-        Birth: req.body.Birth,
-      },
-    }, {
-      new: true
-    },
-    (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error " + err);
-      } else {
-        res.json(UpdatedUser);
+        Birthdate: req.body.Birthdate,
       }
-    }
-  );
-});
+    }, 
+    {new: true})
+    .then(updatedUser => {
+      res.json(updatedUser);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+  });
 
-// 8. Add a movie to a user's list of favorites
-app.post('/users/:userId/favorites', (req, res) => {
+
+  // 8. Add a movie to a user's list of favorites
+app.post('/users/:Username/favorites', (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
