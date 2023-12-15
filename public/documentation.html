@@ -38,7 +38,7 @@
              </tr>
             <tr>
                <td>Return data about a single movie by title to the user</td>
-               <td>/movies/:title</td>
+               <td>/movies/:Title</td>
                <td>GET</td>
                <td>None</td>
                <td>A JSON object holding data about a single movie title, including Genre/Director details.
@@ -61,7 +61,7 @@
             </tr>
             <tr>
                <td> Return data about a genre (description) by name/title:</td>
-               <td>/genres/:name</td>
+               <td>/movies/genres/:genreName</td>
                <td>GET</td>
                <td>None</td>
                <td>A JSON object holding data about the genre.
@@ -76,7 +76,7 @@
             </tr>
             <tr>
                <td>Return data about a director (bio, birth year, death year) by name:</td>
-               <td>/directors/:name</td>
+               <td>/movies/directors/:directorName</td>
                <td>GET</td>
                <td>None</td>
                <td>A JSON object holding data containg the director's biography, birth year, and death year (if applicable)

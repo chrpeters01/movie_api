@@ -35,21 +35,20 @@ app.get('/movies', (req, res) => {
 });
 
 // 2. Returns list of ALL users
-app.get('/users', function (req, res) {
+app.get('/users', (req, res) => {
   Users.find()
-    .then(function (users) {
+    .then((users) => {
       res.status(201).json(users);
     })
-    .catch(function (err) {
+    .catch((err) => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
 });
 
 // 3. Returns data about single movie by title
-app.get('/movies/:title', (req, res) => {
-  Movies.findOne({
-      Title: req.params.Title
+app.get("/movies/:Title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title
     })
     .then((movie) => {
       res.json(movie);
@@ -61,12 +60,10 @@ app.get('/movies/:title', (req, res) => {
 });
 
 // 4. Returns data about a genre (description by name/title)
-app.get('/genres/:name', (req, res) => {
-  Genres.findOne({
-      Name: req.params.Name
-    })
-    .then((genre) => {
-      res.json(genre.Description);
+app.get('/movies/genres/:genreName', (req, res) => {
+  Movies.findOne({'Genre.Name': req.params.genreName})
+    .then((movie) => {
+      res.json(movie.Genre);
     })
     .catch((err) => {
       console.error(err);
@@ -75,12 +72,10 @@ app.get('/genres/:name', (req, res) => {
 });
 
 // 5. Returns data about a director (bio, birth year, death year)
-app.get('/directors/:name', (req, res) => {
-  Directors.findOne({
-      Name: req.params.Name
-    })
-    .then((director) => {
-      res.json(director);
+app.get('/movies/directors/:directorName', (req, res) => {
+  Movies.findOne({'Director.Name': req.params.directorName})
+    .then((movie) => {
+      res.json(movie.Director);
     })
     .catch((err) => {
       console.error(err);
@@ -90,9 +85,7 @@ app.get('/directors/:name', (req, res) => {
 
 // 6. Register new user
 app.post('/users', (req, res) => {
-  Users.findOne({
-      Username: req.body.Username
-    })
+  Users.findOne({Username: req.body.Username })
     .then((user) => {
       if (user) {
         return res.status(400).send(req.body.Username + 'already exists')
@@ -101,11 +94,9 @@ app.post('/users', (req, res) => {
             Username: req.body.Username,
             Password: req.body.Password,
             Email: req.body.Email,
-            Birthday: req.body.Birthday
+            Birthdate: req.body.Birthdate
           })
-          .then((user) => {
-            res.status(201).json(user);
-          })
+          .then((user) => {res.status(201).json(user);})
           .catch((error) => {
             console.error(error);
             res.status(500).send('Error: ' + error);
@@ -117,6 +108,10 @@ app.post('/users', (req, res) => {
       res.status(500).send('Error: ' + error);
     });
 });
+
+
+
+
 
 // 7. Update user info
 app.put('/users/:userId', (req, res) => {
