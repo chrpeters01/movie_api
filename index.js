@@ -136,7 +136,7 @@ app.put('/users/:Username', (req, res) => {
 
 
   // 8. Add a movie to a user's list of favorites
-app.post('/users/:Username/favorites', (req, res) => {
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
   Users.findOneAndUpdate({
       Username: req.params.Username
     }, {
@@ -155,13 +155,25 @@ app.post('/users/:Username/favorites', (req, res) => {
     });
 });
 
-// 9. 
-app.delete('/users/:userId/favorites/:movieId', (req, res) => {
-  res.send('Allow users to remove a movie from their list of favorites');
+// 9. Remove movie from favorites
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    { $pull: { FavoriteMovies: req.params.MovieID } },
+    { new: true }
+  )
+    .then(updatedUser => {
+      res.json(updatedUser);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
 });
+  
 
 // 10. Allow user to deregister
-app.delete('/users/:userId', (req, res) => {
+app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({
       Username: req.params.Username
     })
