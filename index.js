@@ -85,10 +85,10 @@ app.get('/movies/directors/:directorName', (req, res) => {
 
 // 6. Register new user
 app.post('/users', (req, res) => {
-  Users.findOne({Username: req.body.Username })
+  Users.findOne({ Username: req.body.Username })
     .then((user) => {
       if (user) {
-        return res.status(400).send(req.body.Username + 'already exists')
+        return res.status(400).send(req.body.Username + 'already exists');
       } else {
         Users.create({
             Username: req.body.Username,
@@ -96,11 +96,13 @@ app.post('/users', (req, res) => {
             Email: req.body.Email,
             Birthdate: req.body.Birthdate
           })
-          .then((user) => {res.status(201).json(user);})
-          .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
+          .then((user) => {
+            res.status(201).json(user); 
           })
+        .catch((error) => {
+          console.error(error);
+          res.status(500).send('Error: ' + error);
+        })
       }
     })
     .catch((error) => {
