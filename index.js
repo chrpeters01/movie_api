@@ -95,7 +95,7 @@ app.get('/movies/directors/:directorName', passport.authenticate('jwt', {session
 });
 
 // 6. Register new user
-app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/users', (req, res) => {
   Users.findOne({
       Username: req.body.Username
     })
