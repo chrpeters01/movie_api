@@ -11,10 +11,10 @@ const {
   validationResult
 } = require('express-validator');
 
-mongoose.connect('mongodb://localhost:27017/movieDB', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+//mongoose.connect('mongodb://localhost:27017/movieDB', {useNewUrlParser: true, useUnifiedTopology: true
+
+mongoose.connect('mongodb+srv://chrisbpeters01:Mrsbriggs1234@myflixdb.gzhz9ql.mongodb.net/myFlixDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 app.use(morgan('common'));
 
