@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 
 const cors = require('cors');
 
-let allowedOrigins = ['http://localhost:8080','http://localhost:1234','http://testsite.com'];
+let allowedOrigins = ['http://localhost:8080','https://movies-flix-project-46e833a52919.herokuapp.com'];
 
 app.use(cors({
   origin: (origin, callback) => {
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 });
 
 // 1. Returns list of ALL movies
-app.get('/movies'), (req, res) => {
+app.get('/movies', (req, res) => {
   Movies.find()
     .then((movies) => {
       res.status(201).json(movies);
@@ -59,7 +59,7 @@ app.get('/movies'), (req, res) => {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
-};
+});
 
 // 2. Returns list of ALL users
 app.get('/users', passport.authenticate('jwt', {
